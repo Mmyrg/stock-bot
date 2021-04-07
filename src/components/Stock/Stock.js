@@ -1,14 +1,33 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { Component } from 'react';
 import StockController from '../../controllers/StockController';
+import MovingAverage from '../Statistics/MovingAverage';
 
-export default function Stock() {
-  const { ticker, time, timeUnit } = useParams();
+class Stock extends Component {
+  constructor(){
+    super();
+    this.setData = this.setData.bind(this);
+    this.state = { data: {} };
+  }
 
-  return (
-    <>
-      <h2>Stock</h2>
-      <StockController ticker={ticker} time={time} timeUnit={timeUnit} />
+  setData(newData) {
+    this.setState({
+      data: newData
+    });
+  }
+
+  render() {
+    return <>
+      <StockController
+        data={this.state.data}
+        setData={this.setData}
+        ticker={this.props.ticker}
+        time={this.props.time}
+        timeUnit={this.props.timeUnit} />
+      <MovingAverage
+        data={this.state.data}
+      />
     </>
-  );
+  }
 }
+
+export default Stock;

@@ -2,20 +2,18 @@ import React from 'react';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import './App.css';
 
-import Stock from '../Stock/Stock';
+import StockWrapper from '../Stock/StockWrapper';
 
 function App() {
     return (
         <div className="wrapper">
           <BrowserRouter>
-            <nav>
-              <ul>
-                <li><Link to="/stock/SPY/5/day">Stock</Link></li>
-              </ul>
-            </nav>
             <Switch>
               <Route path="/stock/:ticker/:time/:timeUnit">
-                <Stock />
+                <StockWrapper />
+              </Route>
+              <Route path="/stock/:ticker">
+                <StockWrapper />
               </Route>
               <Route path="/">
                 Root

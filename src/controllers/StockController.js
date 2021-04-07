@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 
 class StockController extends Component {
-  constructor() {
-    super();
-    this.state = { data: {} };
-  }
-
   async componentDidMount() {
     const ticker = this.props.ticker;
     const myKey = 'process.env.API_KEY';
@@ -13,10 +8,9 @@ class StockController extends Component {
     const outputSize = 'full';
     const tickerURI = `https://www.alphavantage.co/query?function=${sts}&symbol=${ticker}&outputsize=${outputSize}&apikey=${myKey}`;
 
-    console.log("present");
     const response = await fetch(tickerURI)
     const json = await response.json();
-    this.setState({ 'data': json });
+    this.props.setData(json["Time Series (Daily)"]);
   }
 
   render() {
@@ -25,14 +19,11 @@ class StockController extends Component {
       time,
       timeUnit
     } = this.props;
-    let tsd = this.state.data["Time Series (Daily)"];
+//    let tsd = this.props.data
 
-    return<>
-      <h2>StockController!</h2>
-      {`ticker=${ticker}, time=${time}, timeUnit=${timeUnit}`}
-      <div>
-        {JSON.stringify(tsd, null, '\t')}
-      </div>
+    return <>
+      <h2>{`Ticker=${ticker}`}</h2>
+      {/*<div> {JSON.stringify(tsd, null, '\t')} </div>*/}
     </>
   }
 }
